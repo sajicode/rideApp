@@ -9,6 +9,7 @@ router.route('/')
 router.route('/:id')
   .get(DriversController.getDriver)
   .put(DriversController.editDriver)
+  .delete(DriversController.deleteDriver)
 
 module.exports = router;
 

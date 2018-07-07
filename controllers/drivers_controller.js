@@ -56,3 +56,19 @@ exports.editDriver = function(req, res) {
     });
 };
 
+exports.deleteDriver = function(req, res) {
+  const driverId = req.params.id;
+
+  Driver.findOneAndRemove({
+    _id: driverId
+  }).then((driver) => {
+    if(!driver) {
+      res.status(404).send()
+    }
+
+    res.status(200).send({driver});
+  }).catch(e => {
+    res.staus(400).send(e);
+  }); 
+};
+
