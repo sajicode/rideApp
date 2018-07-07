@@ -93,5 +93,17 @@ describe('#all tests', function() {
         .end(done);
     });
   });
+
+  describe('#Delete a driver', () => {
+    it('should delete a driver', (done) => {
+      request(app)
+        .delete(`/api/drivers/${drivers[0]._id}`)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.firstName).toBeFalsy();
+        })
+        .end(done);
+    });
+  });
   
 });
