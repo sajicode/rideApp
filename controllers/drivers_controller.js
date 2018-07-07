@@ -1,9 +1,5 @@
 const {Driver} = require('../models/driver');
 
-exports.greeting = function(req, res) {
-    res.send({ hi: 'there' });
-};
-
 exports.create = function(req, res) {
   let data = req.body;
   let driver = new Driver(data);
