@@ -23,7 +23,9 @@ describe('#all tests', function() {
   }];
 
   const populateDrivers = function (done) {
-    Driver.remove({}).then(function () {
+    Driver.remove({})
+      // .then(() => Driver.ensureIndexes({'geometry.coordinates': '2dsphere'}))
+      .then(function () {
       let driverOne = new Driver(drivers[0]).save();
       let driverTwo = new Driver(drivers[1]).save();
 
@@ -104,6 +106,36 @@ describe('#all tests', function() {
         })
         .end(done);
     });
+  });
+
+  it('should GET drivers in a location', (done) => {
+    const seattleDriver = new Driver({
+      email: 'seattle@test.com',
+      firstName: 'Grey',
+      geometry: {
+        type: 'Point',
+        coordinates: [-122.4759902, 47.6147628]  
+      }
+    });
+
+    const miamiDriver = new Driver({
+      email: 'miami@test.com',
+      firstName: 'Will',
+      geometry: {
+        type: 'Point',
+        coordinates: [-80.253, 25.791]
+      }
+    });
+
+    Promise.all([seattleDriver.save(), miamiDriver.save()])
+      .then(() => {
+        request(app)
+          .get('/api/driverspoint?lng=-80&lat=25')
+          .expect((res) => {
+            expect(res.body[0].firstName).toBe(miamiDriver.firstName);
+          })
+          .end(done);
+      })
   });
   
 });

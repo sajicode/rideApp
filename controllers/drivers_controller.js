@@ -1,5 +1,25 @@
 const {Driver} = require('../models/driver');
 
+exports.point = function (req, res, next) {
+  const { lng, lat } = req.query;
+
+  Driver.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [parseFloat(lng), parseFloat(lat)]
+        },
+        distanceField: "dist.calculated",
+        maxDistance: 200000,
+        spherical: true
+      }
+    }
+  ])
+  .then(drivers => res.send(drivers))
+  .catch(next);
+};
+
 exports.create = function(req, res) {
   let data = req.body;
   let driver = new Driver(data);
@@ -67,4 +87,5 @@ exports.deleteDriver = function(req, res) {
     res.staus(400).send(e);
   }); 
 };
+
 
