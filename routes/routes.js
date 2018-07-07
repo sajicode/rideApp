@@ -6,5 +6,8 @@ router.route('/')
   .get(DriversController.getDrivers)
   .post(DriversController.create)
 
+router.route('/:id')
+  .put(DriversController.editDriver)
+
 module.exports = router;
 

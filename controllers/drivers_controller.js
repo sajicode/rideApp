@@ -24,3 +24,19 @@ exports.getDrivers = function(req, res) {
       res.status(400).send(e);
     });
 };
+
+exports.editDriver = function(req, res, next) {
+  const driverId = req.params.id;
+  let data = req.body;
+
+  Driver.findByIdAndUpdate({ _id: driverId}, {$set: data}, {new: true})
+    .then((driver) => {
+      if(!driver) {
+        return res.status(404).send();
+      }
+
+      res.status(200).send({driver});
+    }).catch((e) => {
+      res.status(400).send(e);
+    })
+};

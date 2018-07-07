@@ -16,6 +16,7 @@ app.use(cors());
 
 app.use("/api", api)
 
+// middleware
 app.use(function(err, req, res, next) {
   res.status(500).json(err.message);
   next();
