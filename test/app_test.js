@@ -57,7 +57,7 @@ describe('#all tests', function() {
   });
 
   describe('#get drivers', () => {
-    it('should get all drivers', (done) => {
+    it('should fetch all drivers', (done) => {
       request(app)
         .get('/api/drivers')
         .expect(200)
@@ -67,6 +67,31 @@ describe('#all tests', function() {
         })
         .end(done);
     });
-  })
+
+    it('should get a single driver', (done) => {
+      request(app)
+        .get(`/api/drivers/${drivers[0]._id}`)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.firstName).toBe(drivers[0].firstName);
+        })
+        .end(done);
+    });
+  });
+
+  describe('#update a driver', () => {
+    it('should update a single driver', (done) => {
+      let data = {firstName: "Beyonce"}
+      request(app)
+        .put(`/api/drivers/${drivers[1]._id}`)
+        .send(data)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.driver.firstName).toBe(data.firstName)
+          expect(res.body.driver._id).toBe(drivers[1]._id.toHexString())
+        })
+        .end(done);
+    });
+  });
   
 });

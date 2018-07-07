@@ -16,7 +16,22 @@ exports.create = function(req, res) {
     });
 };
 
-exports.getDrivers = function(req, res) {
+exports.getDriver = function(req, res) {
+  const driverId = req.params.id;
+
+  Driver.findById({_id: driverId})
+    .then((driver) => {
+      if(!driver) {
+        res.status(404).send();
+      }
+
+      res.status(200).send(driver);
+    }).catch(e => {
+      res.status(400).send();
+    });
+};
+
+exports.fetchDrivers = function(req, res) {
   Driver.find({})
     .then((drivers) => {
       res.send({drivers})
@@ -25,7 +40,7 @@ exports.getDrivers = function(req, res) {
     });
 };
 
-exports.editDriver = function(req, res, next) {
+exports.editDriver = function(req, res) {
   const driverId = req.params.id;
   let data = req.body;
 
@@ -38,5 +53,6 @@ exports.editDriver = function(req, res, next) {
       res.status(200).send({driver});
     }).catch((e) => {
       res.status(400).send(e);
-    })
+    });
 };
+
