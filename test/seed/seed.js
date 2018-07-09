@@ -7,11 +7,21 @@ const driverTwoId = new ObjectID();
 const drivers = [{
   _id: driverOneId,
   email: 'taxidriver@ride.com',
-  firstName: "kanye"
+  firstName: "kanye",
+  car: "Toyota Camry",
+  geometry: {
+        type: 'Point',
+        coordinates: [3.510454, 6.619413]
+      }
 }, {
   _id: driverTwoId,
   email: 'cabdriver@ride.com',
-  firstName: "shawn"
+  firstName: "shawn",
+  car: "Ford Explorer",
+  geometry: {
+        type: 'Point',
+        coordinates: [3.351486, 6.601838]
+      }
 }];
 
 const populateDrivers = function (done) {

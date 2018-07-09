@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'),
+      validator = require('validator'),
       Schema = mongoose.Schema;
 
 const PointSchema = new Schema({
@@ -17,18 +18,33 @@ const DriverSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    minlength: 8
+    minlength: 8,
+    trim: true,
+    validate: {
+      validator: validator.isEmail,
+      message: '{VALUE} is not a valid email'
+    }
   },
+
   firstName: {
     type: String,
     required: true,
     minlength: 2
   },
+
   driving: {
     type: Boolean,
     default: false
   },
-  geometry: PointSchema
+
+  geometry: PointSchema,
+
+  car: {
+    type: String,
+    require: true,
+    minlength: 6
+  },
+  
 });
 
 var Driver = mongoose.model('driver', DriverSchema);

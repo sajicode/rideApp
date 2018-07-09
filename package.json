@@ -10,13 +10,17 @@
   "author": "Adams Banjo",
   "license": "ISC",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "expect": "^23.3.0",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
     "mocha": "^5.2.0",
     "mongoose": "^5.2.1",
     "morgan": "^1.9.0",
-    "supertest": "^3.1.0"
+    "supertest": "^3.1.0",
+    "validator": "^10.4.0"
   }
 }

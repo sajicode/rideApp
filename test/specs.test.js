@@ -12,7 +12,7 @@ describe('#all tests', function() {
 
   describe('#add drivers', () => {
     it('should add a new driver', (done) => {
-      let data = {email: "saji@dev.com", firstName: "Ninja"}
+      let data = {email: "saji@dev.com", firstName: "Ninja", car: "Mercedes Benz"}
       request(app)
         .post('/api/drivers')
         .send(data)
