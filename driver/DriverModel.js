@@ -9,7 +9,7 @@ const PointSchema = new Schema({
   },
   coordinates: {
     type: [Number],
-    index: '2dsphere'
+    index: '2dsphere',
   }
 });
 
@@ -37,11 +37,14 @@ const DriverSchema = new Schema({
     default: false
   },
 
-  geometry: PointSchema,
+  geometry: {
+    type: PointSchema,
+    required: true
+  },
 
   car: {
     type: String,
-    require: true,
+    required: true,
     minlength: 6
   },
   

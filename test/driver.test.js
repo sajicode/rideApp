@@ -12,7 +12,15 @@ describe('#all tests', function() {
 
   describe('#add drivers', () => {
     it('should add a new driver', (done) => {
-      let data = {email: "saji@dev.com", firstName: "Ninja", car: "Mercedes Benz"}
+      let data = {
+        email: "saji@dev.com", 
+        firstName: "Ninja", 
+        car: "Mercedes Benz",
+        geometry: {
+          type: 'Point',
+          coordinates: [-80.253, 25.791]
+        }
+      };
       request(app)
         .post('/api/drivers')
         .send(data)
@@ -90,7 +98,8 @@ describe('#all tests', function() {
       geometry: {
         type: 'Point',
         coordinates: [-122.4759902, 47.6147628]  
-      }
+      },
+      car: "Lexus 350"
     });
 
     const miamiDriver = new Driver({
@@ -99,7 +108,8 @@ describe('#all tests', function() {
       geometry: {
         type: 'Point',
         coordinates: [-80.253, 25.791]
-      }
+      },
+      car: "Lexus 450"
     });
 
     Promise.all([seattleDriver.save(), miamiDriver.save()])
