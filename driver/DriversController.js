@@ -1,4 +1,4 @@
-const {Driver} = require('../models/driver');
+const {Driver} = require('../driver/DriverModel');
 
 exports.point = function (req, res, next) {
   const { lng, lat } = req.query;

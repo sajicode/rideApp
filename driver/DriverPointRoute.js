@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const DriversController = require('../controllers/drivers_controller');
+const DriversController = require('../driver/DriversController');
 
 router.route('/')
   .get(DriversController.point)
