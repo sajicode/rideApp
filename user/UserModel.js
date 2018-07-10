@@ -17,6 +17,12 @@ let UserSchema = new mongoose.Schema({
     }
   },
 
+  firstName: {
+    type: String,
+    required: true,
+    trim: true
+  },
+
   password: {
     type: String,
     required: true,
@@ -54,7 +60,7 @@ UserSchema.methods.generateAuthToken = function () {
       _id: user._id.toHexString(),
       access
     },
-    process.env.JWT_SECRET
+    process.env.SECRET
   ).toString();
 
   user.tokens.push({
