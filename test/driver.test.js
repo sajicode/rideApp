@@ -115,7 +115,7 @@ describe('#all tests', function() {
     Promise.all([seattleDriver.save(), miamiDriver.save()])
       .then(() => {
         request(app)
-          .get('/api/driverspoint?lng=-80&lat=25')
+          .get('/api/drivers/location?lng=-80&lat=25')
           .expect((res) => {
             expect(res.body[0].firstName).toBe(miamiDriver.firstName);
           })
