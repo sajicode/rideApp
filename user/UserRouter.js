@@ -5,5 +5,8 @@ const express = require('express'),
 router.route('/register')
   .post(UserController.addUser)
 
+router.route('/login')
+  .post(UserController.loginUser)
 
-module.exports = router
+
+module.exports = router;

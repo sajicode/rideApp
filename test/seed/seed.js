@@ -1,8 +1,9 @@
 const { ObjectID } = require('mongodb'),
-      { Driver } = require('../../driver/DriverModel');
+      { Driver } = require('../../driver/DriverModel'),
+      { User } = require('../../user/UserModel');
 
-const driverOneId = new ObjectID();
-const driverTwoId = new ObjectID();
+const driverOneId = new ObjectID(),
+      driverTwoId = new ObjectID();
 
 const drivers = [{
   _id: driverOneId,
@@ -26,13 +27,39 @@ const drivers = [{
 
 const populateDrivers = function (done) {
   Driver.remove({})
-    // .then(() => Driver.ensureIndexes({'geometry.coordinates': '2dsphere'}))
     .then(function () {
       let driverOne = new Driver(drivers[0]).save();
-      let driverTwo = new Driver(drivers[1]).save();
+          driverTwo = new Driver(drivers[1]).save();
 
       return Promise.all([driverOne, driverTwo]);
     }).then(() => done());
 };
 
-module.exports = { drivers, populateDrivers }
+const userOneId = new ObjectID(),
+      userTwoId = new ObjectID();
+
+const users = [{
+  _id: userOneId,
+  email: "kari@dev.com",
+  firstName: "Kari",
+  password: "katherine",
+  location: "West Ham"
+}, {
+  _id: userTwoId,
+  email: "wendy@dev.com",
+  firstName: "Wendy",
+  password: "ketowendy",
+  location: "Ontario"
+}];
+
+const populateUsers = function(done) {
+  User.remove({})
+    .then(function() {
+      let userOne = new User(users[0]).save(),
+          userTwo = new User(users[1]).save();
+
+      return Promise.all([userOne, userTwo]);
+    }).then(() => done());
+};
+
+module.exports = { drivers, populateDrivers, users, populateUsers };
