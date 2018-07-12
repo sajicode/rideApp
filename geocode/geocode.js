@@ -1,8 +1,6 @@
-const yargs = require('yargs'),
-      argv = yargs.argv,
-      axios = require('axios');
+const axios = require('axios');
 
-let geocode = function(address) {
+exports.geocode = function(address) {
 
   let encodedAddress = encodeURIComponent(address);
 
@@ -14,12 +12,11 @@ let geocode = function(address) {
         throw new Error("Unable to find address");
       }
 
-      latitude = response.data.results[0].geometry.location.lat,
-      longitude = response.data.results[0].geometry.location.lng;
+      let latitude = response.data.results[0].geometry.location.lat,
+          longitude = response.data.results[0].geometry.location.lng;
 
-      return [latitude, longitude];
+        res.send([latitude, longitude]);
+      // return [latitude, longitude];
 
     });
 }
-
-module.exports = {geocode};

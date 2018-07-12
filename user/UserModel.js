@@ -60,7 +60,9 @@ UserSchema.methods.generateAuthToken = function () {
       _id: user._id.toHexString(),
       access
     },
-    process.env.SECRET
+    process.env.SECRET, {
+      expiresIn: "5h"
+    }
   ).toString();
 
   user.tokens.push({

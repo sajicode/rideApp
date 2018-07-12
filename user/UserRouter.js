@@ -3,11 +3,17 @@ const express = require('express'),
       UserController = require('./UserController'),
       {authenticate} = require('../auth/Auth');
 
+router.route('/')
+  .get(UserController.fetchUsers);
+
+router.route('/:id')
+  .get(UserController.getUser);
+
 router.route('/register')
-  .post(UserController.addUser)
+  .post(UserController.addUser);
 
 router.route('/login')
-  .post(UserController.loginUser)
+  .post(UserController.loginUser);
 
 router.route('/findcab')
   .get(authenticate, UserController.findTaxi);

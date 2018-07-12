@@ -1,6 +1,6 @@
 const { Driver } = require('./DriverModel');
 
-let locateDriver = function(lng, lat) {
+module.exports.locateDriver = (lng, lat) => {
 
   Driver.aggregate([{
     $geoNear: {
@@ -12,7 +12,5 @@ let locateDriver = function(lng, lat) {
       maxDistance: 200000,
       spherical: true
     }
-  }
+  }]);
 };
-
-module.exports = {locateDriver};

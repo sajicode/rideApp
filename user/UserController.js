@@ -88,7 +88,31 @@ exports.findTaxi = function(req, res) {
                   res.send(driver);
                 }
               }
-            }).catch(next);
+            });
         })
+    })
+};
+
+exports.fetchUsers = (req, res) => {
+  User.find({})
+    .then((err, users) => {
+      if(err) {
+        res.status(400).send(err)
+      }
+
+      res.status(200).send(users);
+    })
+};
+
+exports.getUser = (req, res) => {
+  let userId = req.params.id;
+
+  User.findById(userId)
+    .then((err, user) => {
+      if(err) {
+        res.status(400).send(err)
+      }
+      
+      res.status(200).send(user);
     })
 };
