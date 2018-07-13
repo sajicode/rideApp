@@ -63,7 +63,8 @@ exports.findTaxi = function(req, res) {
           return [longitude, latitude];
           // res.send([longitude, latitude]);
 
-        }).then(function(getDriver) {
+        })
+        .then(function(getDriver) {
           // res.send([longitude, latitude]);
           let coordinates = [longitude, latitude];
           let lng = coordinates[0],
@@ -83,12 +84,17 @@ exports.findTaxi = function(req, res) {
             }
           ])
             .then(drivers => {
+
+              if(drivers.length == 0) {
+                res.status(404).send("No available drivers within your location")
+              }
+
               for(let driver of drivers) {
                 if(!driver.driving) {
-                  res.send(driver);
+                  res.status(200).send(driver);
                 }
               }
-            });
+            }).catch(e => res.send(e));
         })
     })
 };

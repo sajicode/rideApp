@@ -6,9 +6,6 @@ const express = require('express'),
 router.route('/')
   .get(UserController.fetchUsers);
 
-router.route('/:id')
-  .get(UserController.getUser);
-
 router.route('/register')
   .post(UserController.addUser);
 
@@ -17,6 +14,10 @@ router.route('/login')
 
 router.route('/findcab')
   .get(authenticate, UserController.findTaxi);
+
+// this route should be placed last for ObjectID error reasons
+router.route('/:id')
+  .get(UserController.getUser);
 
 
 module.exports = router;

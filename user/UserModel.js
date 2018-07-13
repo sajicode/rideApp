@@ -61,7 +61,7 @@ UserSchema.methods.generateAuthToken = function () {
       access
     },
     process.env.SECRET, {
-      expiresIn: "5h"
+      expiresIn: "48h"
     }
   ).toString();
 
