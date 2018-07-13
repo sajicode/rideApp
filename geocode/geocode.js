@@ -12,11 +12,11 @@ exports.geocode = function(address) {
         throw new Error("Unable to find address");
       }
 
-      let latitude = response.data.results[0].geometry.location.lat,
-          longitude = response.data.results[0].geometry.location.lng;
+      let latitude = response.data.results[0].geometry.location.lat;
+      let longitude = response.data.results[0].geometry.location.lng;
 
-        res.send([latitude, longitude]);
-      // return [latitude, longitude];
+        // res.send([latitude, longitude]);
+      return [latitude, longitude];
 
     });
 }

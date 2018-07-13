@@ -101,24 +101,72 @@ exports.findTaxi = function(req, res) {
 
 exports.fetchUsers = (req, res) => {
   User.find({})
-    .then((err, users) => {
-      if(err) {
-        res.status(400).send(err)
+    .then((users) => {
+      if(!users) {
+        res.status(404).send({})
       }
 
-      res.status(200).send(users);
-    })
+      res.status(200).send(users)
+    }).catch((e) => {
+      res.status(400).send(e);
+    });
 };
 
 exports.getUser = (req, res) => {
   let userId = req.params.id;
 
+  if(!ObjectID.isValid(userId)) {
+    res.status(404).send("Invalid ObjectID")
+  }
+
   User.findById(userId)
-    .then((err, user) => {
-      if(err) {
-        res.status(400).send(err)
+    .then((user) => {
+      if(!user) {
+        res.status(404).send({})
       }
-      
-      res.status(200).send(user);
+
+      res.status(200).send(user)
+    }).catch((e) => {
+      res.status(400).send(e);
     })
+};
+
+exports.editUser = (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+
+  if(!ObjectID.isValid(id)) {
+    res.status(404).send("Invalid ObjectID");
+  }
+
+  User.findByIdAndUpdate({_id: id}, {$set: data}, {new: true})
+    .then((user) => {
+      if(!user) {
+        return res.status(404).send({});
+      }
+
+      res.status(200).send(user);
+    }).catch((e) => {
+      res.status(400).send(e);
+    });
+};
+
+exports.deleteUser = (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+
+  if (!ObjectID.isValid(id)) {
+    res.status(404).send("Invalid ObjectID");
+  }
+
+  User.findByIdAndRemove(id)
+    .then((user) => {
+      if(!user) {
+        res.status(404).send()
+      }
+
+      res.status(200).send(user);
+    }).catch((e) => {
+      res.status(400).send(e);
+    });
 };

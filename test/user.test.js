@@ -17,7 +17,7 @@ describe('#all user tests', () => {
         email: "example@test.com",
         firstName: "Moyosore",
         password: "testing123",
-        location: "Ikoyi-Lekki"
+        location: "Ikoyi"
       };
 
       request(app)
@@ -88,7 +88,7 @@ describe('#all user tests', () => {
 
           User.findById(users[0]._id)
             .then((user) => {
-              expect(user.toObject().tokens[0]).toMatchObject({
+              expect(user.toObject().tokens[1]).toMatchObject({
                 access: 'auth',
                 token: res.headers['x-auth']
               });
@@ -118,10 +118,34 @@ describe('#all user tests', () => {
 
           User.findById(users[1]._id)
             .then((user) => {
-              expect(user.tokens.length).toBe(0);
+              expect(user.tokens.length).toBe(1);
               done();
             }).catch((err) => done(err));
         })    
+    });
+  });
+
+  describe('#GET user(s)', () => {
+    it('should get an authenticated user', (done) => {
+      request(app)
+        .get(`/api/users/${users[0]._id}`)
+        .set('x-auth', users[0].tokens[0].token)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body._id).toBe(users[0]._id.toHexString());
+          expect(res.body.email).toBe(users[0].email);
+        })
+        .end(done);
+    });
+
+    it('should fetch all users', (done) => {
+      request(app)
+        .get(`/api/users`)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.length).toBe(2);
+        })
+        .end(done);
     });
   });
   

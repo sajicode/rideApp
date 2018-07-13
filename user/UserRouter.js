@@ -17,7 +17,9 @@ router.route('/findcab')
 
 // this route should be placed last for ObjectID error reasons
 router.route('/:id')
-  .get(UserController.getUser);
+  .get(authenticate, UserController.getUser)
+  .put(authenticate, UserController.editUser)
+  .delete(authenticate, UserController.deleteUser);
 
 
 module.exports = router;

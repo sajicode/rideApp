@@ -1,6 +1,7 @@
 const { ObjectID } = require('mongodb'),
       { Driver } = require('../../driver/DriverModel'),
-      { User } = require('../../user/UserModel');
+      { User } = require('../../user/UserModel'),
+      jwt = require('jsonwebtoken');
 
 const driverOneId = new ObjectID(),
       driverTwoId = new ObjectID();
@@ -43,13 +44,27 @@ const users = [{
   email: "kari@dev.com",
   firstName: "Kari",
   password: "katherine",
-  location: "West Ham"
+  location: "West Ham",
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({
+      _id: userOneId,
+      access: 'auth'
+    }, process.env.SECRET).toString()
+  }]
 }, {
   _id: userTwoId,
   email: "wendy@dev.com",
   firstName: "Wendy",
   password: "ketowendy",
-  location: "Ontario"
+  location: "Ontario",
+  tokens: [{
+    access: 'auth',
+    token: jwt.sign({
+      _id: userTwoId,
+      access: 'auth'
+    }, process.env.SECRET).toString()
+  }]
 }];
 
 const populateUsers = function(done) {
