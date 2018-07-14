@@ -1,13 +1,13 @@
 # rideApp
 A mini implementation of a ride hailing app
 
-# Will go through the app design process including how the models where created and the functions of each API.
+Will go through the app design process including how the models where created and the functions of each API.
 
-# The concept of this app is to mimick the average ride hailing app whereby a user can search for cabs based on the location of the driver.
+The concept of this app is to mimick the average ride hailing app whereby a user can search for cabs based on the location of the driver.
 
-# In creating the Driver model, a geometry property was added to hold the coordinates of each driver, however, the user model has a property for the user's physical location. In the process of searching for a cab, the user's location is coverted to latitude and longitude using google apis which are then used to get drivers based on that location.
+In creating the Driver model, a geometry property was added to hold the coordinates of each driver, however, the user model has a property for the user's physical location. In the process of searching for a cab, the user's location is coverted to latitude and longitude using google apis which are then used to get drivers based on that location.
 
-# The database of choice is MongoDB with the mongoose ORM 
+The database of choice is MongoDB with the mongoose ORM 
 
 # CONFIGURATION
 
