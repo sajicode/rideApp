@@ -138,6 +138,16 @@ describe('#all user tests', () => {
         .end(done);
     });
 
+    it('should return 401 if user not authenticated', (done) => {
+      request(app)
+        .get(`/api/users/${users[0]._id}`)
+        .expect(401)
+        .expect((res) => {
+          expect(res.body).toEqual({});
+        })
+        .end(done);
+    });
+
     it('should fetch all users', (done) => {
       request(app)
         .get(`/api/users`)
@@ -148,5 +158,48 @@ describe('#all user tests', () => {
         .end(done);
     });
   });
+
+  describe('#Edit user', () => {
+    it('should update a user', (done) => {
+
+      data = {
+        firstName: "Beyonce",
+        email: "bey@carter.com"
+      }
+      request(app)
+        .put(`/api/users/${users[1]._id}`)
+        .set('x-auth', users[1].tokens[0].token)
+        .send(data)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.firstName).toBe(data.firstName);
+        })
+        .end(done);
+    });
+  });
+
+  describe('#Delete User', () => {
+    it('should remove a user', (done) => {
+      request(app)
+        .delete(`/api/users/${users[1]._id}`)
+        .set('x-auth', users[1].tokens[0].token)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body._id).toBe(users[1]._id.toHexString());
+        })
+        .end((err, res) => {
+          if(err) {
+            return done(err);
+          }
+
+          User.findById(users[1]._id)
+            .then((user) => {
+              expect(user).toBeFalsy();
+              done();
+            }).catch((e) => done(e));
+        });
+    });
+  });
+  
   
 });
