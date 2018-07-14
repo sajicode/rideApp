@@ -4,8 +4,6 @@ const _ = require('lodash'),
       {User} = require('./UserModel'),
       {authenticate} = require('../auth/Auth'),
       axios = require('axios');
-      // locateDriver = require('../driver/DriverLocation');
-      // {geocode} = require('../geocode/geocode');
 
 exports.addUser = function(req, res) {
   let data = req.body;
