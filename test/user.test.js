@@ -3,7 +3,7 @@ const expect = require('expect'),
       { ObjectID } = require('mongodb'),
       { app } = require('../app'),
       { User } = require('../user/UserModel'),
-      { users, populateUsers } = require('./seed/seed');
+      { users, populateUsers, drivers } = require('./seed/seed');
 
 describe('#all user tests', () => {
 
@@ -200,6 +200,31 @@ describe('#all user tests', () => {
         });
     });
   });
+
+  describe('#getcab', () => {
+    it('should get a cab for a user based on location', (done) => {
+      request(app)
+        .get(`/api/users/findcab`)
+        .set('x-auth', users[0].tokens[0].token)
+        .expect(200)
+        .expect((res) => {
+          expect(res.body.firstName).toBe(drivers[1].firstName);
+          expect(res.body.email).toBe(drivers[1].email);
+        })
+        .end(done);
+    });
+
+    it('should return 404 if no driver within same location', (done) => {
+      request(app)
+        .get(`/api/users/findcab`)
+        .set('x-auth', users[1].tokens[0].token)
+        .expect(404)
+        .expect((res) => {
+          expect(res.body).toEqual({});
+        })
+        .end(done);
+    });
+  })
   
   
 });

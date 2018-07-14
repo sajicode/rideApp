@@ -22,7 +22,7 @@ const drivers = [{
   car: "Ford Explorer",
   geometry: {
         type: 'Point',
-        coordinates: [3.351486, 6.601838]
+        coordinates: [-77.543312, 37.587655]
       }
 }];
 
@@ -30,7 +30,7 @@ const populateDrivers = function (done) {
   Driver.remove({})
     .then(function () {
       let driverOne = new Driver(drivers[0]).save();
-          driverTwo = new Driver(drivers[1]).save();
+      let driverTwo = new Driver(drivers[1]).save();
 
       return Promise.all([driverOne, driverTwo]);
     }).then(() => done());
@@ -70,8 +70,8 @@ const users = [{
 const populateUsers = function(done) {
   User.remove({})
     .then(function() {
-      let userOne = new User(users[0]).save(),
-          userTwo = new User(users[1]).save();
+      let userOne = new User(users[0]).save();
+      let userTwo = new User(users[1]).save();
 
       return Promise.all([userOne, userTwo]);
     }).then(() => done());
